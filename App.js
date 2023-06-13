@@ -1,39 +1,55 @@
-import { useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native'
-import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
+import * as Font from 'expo-font';
 import HomePage from './pages/HomePage';
 
-SplashScreen.preventAutoHideAsync();
-
-export default function App() {
-  const [fontsLoaded] = useFonts({
-    'Nomerok_Mono': require('./assets/fonts/Nomerok_Mono.otf'),
-  });
-
-  const onLayoutRootView = useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
+const CustomText = (props) => {
+    const [fontLoaded, setFontLoaded] = useState(false);
+  
+    useEffect(() => {
+      async function loadFont() {
+      await Font.loadAsync({
+        'Nomerok-Mono': require('./assets/fonts/Nomerok-Mono.otf'),
+      });
+  
+      setFontLoaded(true);
     }
-  }, [fontsLoaded]);
+  
+    loadFont();
+    }, []);
+  
+    if (!fontLoaded) {
+      return <Text>Loading...</Text>;
+    }
+  
+    return (
+      <Text style={{ ...props.style, fontFamily: 'Nomerok-Mono' }}>
+        {props.children}
+      </Text>
+    );
+  };
 
-  if (!fontsLoaded) {
-    return null;
-  }
-
-  return (
-    <View style={styles.container} onLayout={onLayoutRootView}>
-      <HomePage style={styles.text}/>
-    </View>
-  );
-}
+  const App = () => {
+    return (
+      <View style={styles.container}>
+        <CustomText style={styles.text}>
+          <HomePage/>
+        </CustomText>
+      </View>
+    );
+  };
+    
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#2E2E2E",
+    fontFamily: 'Nomerok-Mono',
   },
   text: {
-      fontFamily: 'NomerokMono',
+      fontFamily: 'Nomerok-Mono',
+      fontSize: 22,
   }
 })
+
+export default App;
 

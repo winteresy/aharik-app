@@ -18,7 +18,7 @@ const HomePage = ({ navigation }) => {
     <View style={styles.homepage}>
       <Logo />
       <View style={styles.containerhome}>
-        <Text>Гуляй со своей собакой в компании</Text>
+        <Text style={styles.containerhometext}>Гуляй со своей собакой в компании</Text>
         <Button title="Зарегистрироваться" onPress={handleRegistrationPress}  style={styles.buttonRegister}/>
         <Button title="Зайти" onPress={handleLoginPress} style={styles.buttonLogin}/>
       </View>
@@ -30,9 +30,9 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#2E2E2E",
         alignItems: "center",
-        fontFamily: 'Nomerok_Mono',
     },
     containerhome: {
+      flex: 1,
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "center",
@@ -40,6 +40,9 @@ const styles = StyleSheet.create({
       height: 218,
       borderRadius: 25,
       marginTop: 180,
+    },
+    containerhometext: {
+      fontFamily: 'Nomerok-Mono',
     },
     buttonRegister: {
         backgroundColor: "#FF9344",
